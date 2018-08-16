@@ -213,7 +213,7 @@ int main()
 	int open = 0;
 
 	init_board();
-	print_board(1);
+	//print_board(1);
 
 	while (1) {
 		print_board(0);
