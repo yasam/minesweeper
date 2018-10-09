@@ -223,13 +223,11 @@ int main()
 
 		switch (action) {
 		case ACTION_OPEN:
-			if (GET(row, col) == CELL_CLOSED || GET(row, col) == CELL_MINE) {
-				if (GET(row, col) == CELL_MINE) {
-					SET(row, col, CELL_BOMB);
-					printf("You lost!!!\n");
-					goto end;
-				}
-
+			if (GET(row, col) == CELL_MINE) {
+				SET(row, col, CELL_BOMB);
+				printf("You lost!!!\n");
+				goto end;
+			} else if (GET(row, col) == CELL_CLOSED) {
 				ret = open_cell(row, col);
 				open += ret;
 			} else {
@@ -238,21 +236,24 @@ int main()
 			}
 			break;
 		case ACTION_MARK:
-			if (GET(row, col) == CELL_CLOSED || GET(row, col) == CELL_MINE) {
+			if (GET(row, col) == CELL_CLOSED) {
 				found++;
-				if (GET(row, col) == CELL_MINE)
-					SET(row, col, CELL_MARK);
-				else
-					SET(row, col, CELL_INVALID);
+				SET(row, col, CELL_INVALID);
+			} else if( GET(row, col) == CELL_MINE) {
+				found++;
+				SET(row, col, CELL_MARK);
 			} else {
 				printf("Invalid action(%c) for this cell\n", action);
 				continue;
 			}
 			break;
 		case ACTION_UNMARK:
-			if (GET(row, col) == CELL_INVALID || GET(row, col) == CELL_MARK) {
+			if (GET(row, col) == CELL_INVALID) {
 				found--;
 				SET(row, col, CELL_CLOSED);
+			} else if (GET(row, col) == CELL_MARK) {
+				found--;
+				SET(row, col, CELL_MINE);
 			} else {
 				printf("Invalid action(%c) for this cell\n", action);
 				continue;
@@ -262,7 +263,7 @@ int main()
 			break;
 		}
 
-		if ((open + found) >= (ROW_COUNT * COL_COUNT)) {
+		if ((found == MINE_COUNT) && (open + found) >= (ROW_COUNT * COL_COUNT)) {
 			printf("You won!!!\n");
 			break;
 		} else {
