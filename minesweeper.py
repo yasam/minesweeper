@@ -170,6 +170,7 @@ class game:
 			cell = self.get_cell(row, col)
 			if action == ACTION_OPEN:
 				if cell == CELL_MINE :
+					self.set_cell(row, col, CELL_BOMB)
 					print("You lost!!!")
 					break
 				elif cell == CELL_CLOSED :
