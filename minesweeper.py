@@ -81,7 +81,7 @@ class game:
 				
 			print(self.rows[i] + "" + row)
 
-	def get_row(self):
+	def read_row(self):
 		while True:
 			row = input("Enter row:")
 			if ord(row[0]) < ord('A') or ord(row[0]) >= (ord('A') + self.row_count):
@@ -89,7 +89,7 @@ class game:
 				continue;
 			return ord(row[0]) - ord('A')
 
-	def get_col(self):
+	def read_col(self):
 		while True:
 			col = input("Enter col:")
 			try:
@@ -103,7 +103,7 @@ class game:
 				continue;
 			return col - 1
 
-	def get_action(self):
+	def read_action(self):
 		while True:
 			row = input("Enter action (O:Open, M:Mark, U:Unmark, C:Cancel):")
 			if row[0] == ACTION_OPEN or row[0] == ACTION_MARK or row[0] == ACTION_UNMARK or row[0] == ACTION_CANCEL:
@@ -160,11 +160,11 @@ class game:
 		self.print_board(True)
 		while True:
 			self.print_board(False)
-			row = self.get_row();
+			row = self.read_row();
 			#debug(str(row))
-			col = self.get_col();
+			col = self.read_col();
 			#debug(str(col))
-			action = self.get_action();
+			action = self.read_action();
 			#debug(str(action))
 
 			cell = self.get_cell(row, col)
