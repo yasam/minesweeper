@@ -3,10 +3,6 @@
 import sys
 import random
 
-ROW_COUNT 	= 16
-COL_COUNT 	= 30
-MINE_COUNT 	= 99
-
 CELL_CLOSED 	= '-'
 CELL_OPEN 	= ' '
 CELL_MINE 	= 'M'
@@ -18,6 +14,8 @@ ACTION_OPEN 	= 'O'
 ACTION_MARK 	= 'M'
 ACTION_UNMARK 	= 'U'
 ACTION_CANCEL 	= 'C'
+ACTION_DUMP 	= 'D'
+ACTION_EXIT 	= 'E'
 
 
 def debug(msg):
@@ -84,6 +82,8 @@ class game:
 	def read_row(self):
 		while True:
 			row = input("Enter row:")
+			if len(row) <= 0:
+				continue
 			if ord(row[0]) < ord('A') or ord(row[0]) >= (ord('A') + self.row_count):
 				print("Invalid row:" + row)
 				continue;
@@ -105,11 +105,15 @@ class game:
 
 	def read_action(self):
 		while True:
-			row = input("Enter action (O:Open, M:Mark, U:Unmark, C:Cancel):")
-			if row[0] == ACTION_OPEN or row[0] == ACTION_MARK or row[0] == ACTION_UNMARK or row[0] == ACTION_CANCEL:
-				return row[0]
+			action = input("Enter action (O:Open, M:Mark, U:Unmark, C:Cancel):")
+			if len(action) <= 0:
+				continue
+			if action[0] == ACTION_OPEN or action[0] == ACTION_MARK or \
+			   action[0] == ACTION_UNMARK or action[0] == ACTION_CANCEL or \
+			   action[0]==ACTION_DUMP or action[0]==ACTION_EXIT:
+				return action[0]
 			else:
-				print("Invalid action:"+row)
+				print("Invalid action:"+action)
 	def get_cell(self, row, col):
 		return self.board[row][col]
 
@@ -136,10 +140,10 @@ class game:
 		return cnt
 
 	def open_cell(self, row, col):
-		if row < 0 or row > self.row_count:
+		if row < 0 or row >= self.row_count:
 			return
 
-		if col < 0 or col > self.col_count:
+		if col < 0 or col >= self.col_count:
 			return
 
 		cnt = self.get_mine_count(row, col)
@@ -153,8 +157,16 @@ class game:
 
 		for i in (-1, 0, 1):
 			for j in (-1, 0 , 1):
-				if self.get_cell(row + i, col + j) == CELL_CLOSED :
-					self.open_cell(row + i, col + j)
+				if (row + i)  >= self.row_count or (row + i) < 0:
+				    continue
+				if (col + j)  >= self.col_count or (col + j) < 0:
+				    continue
+				try:
+					if self.get_cell(row + i, col + j) == CELL_CLOSED :
+						self.open_cell(row + i, col + j)
+				except:
+					debug("Exception row:"+str(row+i)+", col:"+str(col+j))
+					continue
 
 	def play(self):
 		self.print_board(True)
@@ -200,6 +212,10 @@ class game:
 
 			elif action == ACTION_CANCEL:
 				debug("action is cancel, do nothing")
+			elif action == ACTION_DUMP:
+				self.print_board(True)
+			elif action == ACTION_EXIT:
+				break
 			
 			if self.found == self.mine_count and self.open_count == ((self.row_count * self.col_count) - self.mine_count) :
 				print("You won!!!")
@@ -212,7 +228,7 @@ class game:
 
 
 def main():
-	game(ROW_COUNT, COL_COUNT, MINE_COUNT).play()
+	game(16, 30, 99).play()
 
 if __name__ == "__main__":
 	main()
