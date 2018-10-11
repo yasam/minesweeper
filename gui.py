@@ -4,6 +4,7 @@ import sys
 import random
 import json
 from appJar import gui
+from tkinter import messagebox
 
 from minesweeper import *
 
@@ -21,10 +22,9 @@ class GameGui(MineSweeper):
 		return str(row).zfill(2) + "-" + str(col).zfill(2)
 
 	def message(self, msg):
-		print(msg)
+		messagebox.showinfo("MineSweeper", msg)
 
 	def mouse_left_click(self, event):
-		#print( "left click row=" + str(event.widget.row) + " col=" + str(event.widget.col))
 		result = self.open(event.widget.row, event.widget.col)
 		self.draw_board()
 		if  result == False :
@@ -36,7 +36,6 @@ class GameGui(MineSweeper):
 			self.app.stop()
 
 	def mouse_right_click(self, event):
-		#print( "right click row=" + str(event.widget.row) + " col=" + str(event.widget.col))
 		cell = self.get_cell(event.widget.row, event.widget.col)
 		if cell == CELL_INVALID or cell == CELL_MARK :
 			self.unmark(event.widget.row, event.widget.col)
@@ -130,3 +129,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+

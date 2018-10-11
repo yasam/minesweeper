@@ -132,9 +132,9 @@ class MineSweeper:
 			self.set_cell(row, col, CELL_MINE)
 			self.found -= 1
 		else:
-			self.message("You cannot unmark this cell")
+			self.message("You cannot unmark this cell!")
 
 	def message(self, msg):
-		raise NotImplementedError("Subclass must implement abstract method")
+		raise NotImplementedError("Subclass must implement abstract method!!!")
 
 
