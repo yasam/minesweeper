@@ -28,6 +28,7 @@ class GameGui(MineSweeper):
 		result = self.open(event.widget.row, event.widget.col)
 		self.draw_board()
 		if  result == False :
+			self.draw_board(True)
 			self.message("You Lost!!!")
 			self.app.stop()
 
