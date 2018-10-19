@@ -18,13 +18,23 @@ class GameText(MineSweeper):
 	def __init__(self, row, col, mine):
 		return MineSweeper.__init__(self, row, col, mine)
 
+	def message(self, msg):
+		print(msg)
+
+
+	def update_cell(self, row, col, is_real=False):
+		#do nothing in text mode
+		return
+
+
 	def print_board(self, is_real = False):
 		col = ""
 		for i in range(self.col_count):
 			if i < 9:
-				col += "  " + str(self.cols[i])
+				col += "  "
 			else:
-				col += " " + str(self.cols[i])
+				col += " "
+			col +=  str(self.cols[i])
 
 		print(" " + col)
 
@@ -32,18 +42,20 @@ class GameText(MineSweeper):
 			row = ""
 			for j in range(self.col_count):
 				cell = self.get_cell(i, j)
-				if is_real == False:
-					if cell == CELL_MINE:
-						cell = CELL_CLOSED
-					elif cell == CELL_INVALID:
-						cell = CELL_MARK
-				
-				row += "  " + cell
-				
-			print(self.rows[i] + "" + row)
+				val = cell.get_str_val()
+				if cell.is_open():
+					if is_real:
+						val = cell.get_str_real_val()
+				else:
+					if cell.is_marked() == False:
+						val = "-"
 
-	def message(self, msg):
-		print(msg)
+					if is_real:
+						val = cell.get_str_real_val()
+
+				row += "  " + val
+
+			print(self.rows[i] + row)
 
 	def read_row(self):
 		while True:
