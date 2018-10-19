@@ -3,6 +3,8 @@
 import sys
 import random
 import json
+import argparse
+
 from minesweeper import *
 
 ACTION_OPEN 	= 'O'
@@ -28,6 +30,8 @@ class GameText(MineSweeper):
 
 
 	def print_board(self, is_real = False):
+		# default, "green", "yellow", "blue", "magenta", "cyan", "light red", "light magenta", "red"
+		colors = ['\033[39m', '\033[32m', '\033[33m', '\033[34m', '\033[35m', '\33[36m', '\033[91m', '\033[95m' , '\033[31m']
 		col = ""
 		for i in range(self.col_count):
 			if i < 9:
@@ -50,7 +54,7 @@ class GameText(MineSweeper):
 				if is_real:
 					val = cell.get_str_real_val()
 
-				row += "  " + val
+				row += "  " + colors[cell.get_mine_count()] + val + colors[0]
 
 			print(self.rows[i] + row)
 
@@ -124,7 +128,14 @@ class GameText(MineSweeper):
 
 def main():
 	global game
-	game = GameText(16, 30, 99)
+	argparser = argparse.ArgumentParser()
+	argparser.add_argument("-r", "--row", help="rows count", type=int, default=16)
+	argparser.add_argument("-c", "--col", help="cols count", type=int, default=30)
+	argparser.add_argument("-m", "--mine", help="mines count", type=int, default=99)
+
+	args = argparser.parse_args()
+
+	game = GameText(args.row, args.col, args.mine)
 	game.play()
 
 if __name__ == "__main__":
