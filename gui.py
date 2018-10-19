@@ -32,12 +32,13 @@ class GameGui(MineSweeper):
 		messagebox.showinfo("MineSweeper", msg)
 
 	def update_cell(self, row, col, is_real=False):
+		fgcolors = ["","green", "yellow", "blue", "purple", "navy", "orange", "maroon", "red"]
 		cell = self.get_cell(row, col)
 		if cell.is_open() :
-			color = "LightGrey"
+			bgcolor = "LightGrey"
 			relief = "sunken"
 		else:
-			color = "LightGrey"
+			bgcolor = "LightGrey"
 			relief = "raised"
 
 		if is_real:
@@ -49,7 +50,11 @@ class GameGui(MineSweeper):
 		l = self.get_cell_name(row+1, col+1)
 		lbl = self.app.getLabelWidget(l)
 
-		self.app.setLabelBg(l, color)
+		fgcolor = fgcolors[cell.get_mine_count()]
+		if fgcolor != "":
+			self.app.setLabelFg(l, fgcolor)
+
+		self.app.setLabelBg(l, bgcolor)
 		lbl.config(relief=relief)
 		lbl.config(text = val)
 
