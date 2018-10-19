@@ -102,6 +102,8 @@ class GameGui(MineSweeper):
 			lbl = self.get_cell_name(0, i+1)
 			self.app.setLabel(lbl, str(self.cols[i]))
 			self.app.setLabelBg(lbl, "LightBlue")
+			self.app.setLabelWidth(lbl, 40)
+			self.app.setLabelHeight(lbl, 40)
 			self.app.getLabelWidget(lbl).config(relief="ridge")
 
 		#draw rows
@@ -109,6 +111,8 @@ class GameGui(MineSweeper):
 			lbl = self.get_cell_name(i+1, 0)
 			self.app.setLabel(lbl, self.rows[i])
 			self.app.setLabelBg(lbl, "LightBlue")
+			self.app.setLabelWidth(lbl, 40)
+			self.app.setLabelHeight(lbl, 40)
 			self.app.getLabelWidget(lbl).config(relief="ridge")
 
 		# set verbose events
@@ -130,7 +134,9 @@ class GameGui(MineSweeper):
 		lbl.config(text=str(self.mine_count - self.found))
 
 	def play(self):
-		self.app = gui("Minesweeper by yasam", "1200x600")
+		width = (self.col_count + 1) * 40
+		height = (self.row_count + 1) * 40
+		self.app = gui("Minesweeper by yasam", str(width)+"x"+str(height), handleArgs=False)
 		self.app.setSticky("news")
 		self.app.setExpand("both")
 		self.create_board()
@@ -139,12 +145,12 @@ class GameGui(MineSweeper):
 
 def main():
 	global game
-	parser = argparse.ArgumentParser()
-	parser.add_argument("-r", "--row", type=int, default=16, help="rows count")
-	parser.add_argument("-c", "--col", type=int, default=30, help="cols count")
-	parser.add_argument("-m", "--mine", type=int, default=99, help="mines count")
+	argparser = argparse.ArgumentParser()
+	argparser.add_argument("-r", "--row", help="rows count", type=int, default=16)
+	argparser.add_argument("-c", "--col", help="cols count", type=int, default=30)
+	argparser.add_argument("-m", "--mine", help="mines count", type=int, default=99)
 
-	args = parser.parse_args()
+	args = argparser.parse_args()
 
 	game = GameGui(args.row, args.col, args.mine)
 	game.play()
