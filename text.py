@@ -43,15 +43,12 @@ class GameText(MineSweeper):
 			for j in range(self.col_count):
 				cell = self.get_cell(i, j)
 				val = cell.get_str_val()
-				if cell.is_open():
-					if is_real:
-						val = cell.get_str_real_val()
-				else:
-					if cell.is_marked() == False:
-						val = "-"
 
-					if is_real:
-						val = cell.get_str_real_val()
+				if cell.is_open() == False and cell.is_marked() == False:
+					val = "-"
+
+				if is_real:
+					val = cell.get_str_real_val()
 
 				row += "  " + val
 

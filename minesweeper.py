@@ -152,7 +152,7 @@ class MineSweeper:
 
 		return cnt
 
-	def open_cell(self, row, col):
+	def explore_cell(self, row, col):
 		if row < 0 or row >= self.row_count:
 			return
 
@@ -176,9 +176,12 @@ class MineSweeper:
 				    continue
 				if (col + j)  >= self.col_count or (col + j) < 0:
 				    continue
+
 				cell = self.get_cell(row + i, col + j)
+
 				if cell.is_open() == False:
-					self.open_cell(row + i, col + j)
+					self.explore_cell(row + i, col + j)
+
 	def open(self, row, col):
 		cell = self.get_cell(row, col)
 		if cell.is_mine():
@@ -187,7 +190,7 @@ class MineSweeper:
 			# You lost !!!
 			return False
 		elif cell.is_open() == False:
-			self.open_cell(row, col)
+			self.explore_cell(row, col)
 		else:
 			self.message("You cannot open this cell!")
 
