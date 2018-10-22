@@ -50,14 +50,17 @@ class GameText(MineSweeper):
 			for j in range(self.col_count):
 				cell = self.get_cell(i, j)
 				val = cell.get_str_val()
-
+				# default is closed
 				color = ""
-				if cell.is_open() == False and cell.is_marked() == False:
-					val = "."
-					bgcolor = bgclosed
-				else:
-					color = colors[cell.get_mine_count()]
+				bgcolor = bgclosed
+
+				if cell.is_open():
 					bgcolor = bgopen
+					color = colors[cell.get_mine_count()]
+				else:
+					# put . for closed cells
+					if cell.is_marked() == False:
+						val = "."
 
 				if is_real:
 					val = cell.get_str_real_val()
@@ -87,7 +90,7 @@ class GameText(MineSweeper):
 				self.message("Invalid value:" + col)
 				continue
 
-			if 1 < = col <= self.col_count:
+			if 1 <= col <= self.col_count:
 				return col - 1
 
 			self.message("Invalid col:" + str(col))

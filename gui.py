@@ -35,9 +35,11 @@ class GameGui(MineSweeper):
 		fgcolors = ["","green", "yellow", "blue", "purple", "navy", "orange", "maroon", "red"]
 		cell = self.get_cell(row, col)
 
+		# default state is closed
 		bgcolor = "DarkGrey"
 		relief = "raised"
 		val = cell.get_str_val()
+
 		if cell.is_open() :
 			bgcolor = "LightGrey"
 			relief = "sunken"
