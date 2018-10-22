@@ -173,7 +173,7 @@ class MineSweeper:
 
 				cell = self.get_cell(row + i, col + j)
 
-				if cell.is_open() == False:
+				if cell.is_open() == False and cell.is_marked() == False:
 					self.explore_cell(row + i, col + j)
 
 	def open(self, row, col):
