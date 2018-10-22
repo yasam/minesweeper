@@ -30,15 +30,18 @@ class GameText(MineSweeper):
 
 
 	def print_board(self, is_real = False):
-		# default, "green", "yellow", "blue", "magenta", "cyan", "light red", "light magenta", "red"
+		# default, "green", "yellow", "blue", "magenta", "cyan", "light red", "light magenta", "red", "dark gray"
 		colors = ['\033[39m', '\033[32m', '\033[33m', '\033[34m', '\033[35m', '\33[36m', '\033[91m', '\033[95m' , '\033[31m']
+		bgnormal = '\033[49m'
+		bgclosed = '\033[100m'
+		bgopen = '\033[47m'
+
 		col = ""
 		for i in range(self.col_count):
 			if i < 9:
-				col += "  "
-			else:
 				col += " "
-			col +=  str(self.cols[i])
+
+			col +=  str(self.cols[i]) + " "
 
 		print(" " + col)
 
@@ -48,13 +51,18 @@ class GameText(MineSweeper):
 				cell = self.get_cell(i, j)
 				val = cell.get_str_val()
 
+				color = ""
 				if cell.is_open() == False and cell.is_marked() == False:
-					val = "-"
+					val = "."
+					bgcolor = bgclosed
+				else:
+					color = colors[cell.get_mine_count()]
+					bgcolor = bgopen
 
 				if is_real:
 					val = cell.get_str_real_val()
 
-				row += "  " + colors[cell.get_mine_count()] + val + colors[0]
+				row += bgcolor+color + " " + val + " " + colors[0] + bgnormal
 
 			print(self.rows[i] + row)
 
