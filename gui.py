@@ -38,7 +38,7 @@ class GameGui(MineSweeper):
 			bgcolor = "LightGrey"
 			relief = "sunken"
 		else:
-			bgcolor = "LightGrey"
+			bgcolor = "DarkGrey"
 			relief = "raised"
 
 		if is_real:
