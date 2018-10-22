@@ -153,12 +153,6 @@ class MineSweeper:
 		return cnt
 
 	def explore_cell(self, row, col):
-		if row < 0 or row >= self.row_count:
-			return
-
-		if col < 0 or col >= self.col_count:
-			return
-
 		cell = self.get_cell(row, col)
 		cnt = self.get_mine_count(row, col)
 		cell.open()
@@ -184,37 +178,41 @@ class MineSweeper:
 
 	def open(self, row, col):
 		cell = self.get_cell(row, col)
+
+		if cell.is_open():
+			self.message("You cannot open this cell!")
+			True
+
 		if cell.is_mine():
 			cell.set_bomb()
 			self.update_cell(row, col)
 			# You lost !!!
 			return False
-		elif cell.is_open() == False:
-			self.explore_cell(row, col)
-		else:
-			self.message("You cannot open this cell!")
+
+		self.explore_cell(row, col)
 
 		return True
 
 	def mark(self, row, col):
 		cell = self.get_cell(row, col)
-		if cell.is_open() == False and cell.is_marked() == False:
-			cell.mark()
-			self.found += 1
-			self.update_cell(row, col)
-		else:
+
+		if cell.is_open() or cell.is_marked():
 			self.message("You cannot mark this cell!")
+			return
 
-
+		cell.mark()
+		self.found += 1
+		self.update_cell(row, col)
 
 	def unmark(self, row, col):
 		cell = self.get_cell(row, col)
-		if cell.is_marked() :
-			cell.unmark()
-			self.found -= 1
-			self.update_cell(row, col)
-		else:
+		if cell.is_marked() == False:
 			self.message("You cannot unmark this cell!")
+			return
+
+		cell.unmark()
+		self.found -= 1
+		self.update_cell(row, col)
 
 
 	def message(self, msg):
