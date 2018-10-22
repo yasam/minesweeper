@@ -91,13 +91,12 @@ class GameText(MineSweeper):
 			return col - 1
 
 	def read_action(self):
+		actions = [ACTION_OPEN, ACTION_MARK, ACTION_UNMARK, ACTION_CANCEL, ACTION_DUMP, ACTION_EXIT]
 		while True:
 			action = input("Enter action (O:Open, M:Mark, U:Unmark, C:Cancel):")
 			if len(action) <= 0:
 				continue
-			if action[0] == ACTION_OPEN or action[0] == ACTION_MARK or \
-			   action[0] == ACTION_UNMARK or action[0] == ACTION_CANCEL or \
-			   action[0]==ACTION_DUMP or action[0]==ACTION_EXIT:
+			if action[0] in actions :
 				return action[0]
 			else:
 				self.message("Invalid action:"+action)
