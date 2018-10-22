@@ -71,7 +71,7 @@ class GameText(MineSweeper):
 			row = input("Enter row:")
 			if len(row) <= 0:
 				continue
-			if ord(row[0]) < ord('A') or ord(row[0]) >= (ord('A') + self.row_count):
+			if row[0] not in self.rows :
 				self.message("Invalid row:" + row)
 				continue;
 			return ord(row[0]) - ord('A')
