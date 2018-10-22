@@ -181,7 +181,7 @@ class MineSweeper:
 
 		if cell.is_open():
 			self.message("You cannot open this cell!")
-			True
+			return True
 
 		if cell.is_mine():
 			cell.set_bomb()
