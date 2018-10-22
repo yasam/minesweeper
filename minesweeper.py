@@ -178,7 +178,7 @@ class MineSweeper:
 	def open(self, row, col):
 		cell = self.get_cell(row, col)
 
-		if cell.is_open():
+		if cell.is_open() or cell.is_marked():
 			self.message("You cannot open this cell!")
 			return True
 
