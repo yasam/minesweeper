@@ -71,10 +71,12 @@ class GameText(MineSweeper):
 			row = input("Enter row:")
 			if len(row) <= 0:
 				continue
-			if row[0] not in self.rows :
-				self.message("Invalid row:" + row)
-				continue;
-			return ord(row[0]) - ord('A')
+
+			if row[0] in self.rows :
+				return ord(row[0]) - ord('A')
+
+			self.message("Invalid row:" + row)
+
 
 	def read_col(self):
 		while True:
@@ -85,10 +87,11 @@ class GameText(MineSweeper):
 				self.message("Invalid value:" + col)
 				continue
 
-			if col < 1 or col > self.col_count:
-				self.message("Invalid col:" + str(col))
-				continue;
-			return col - 1
+			if 1 < = col <= self.col_count:
+				return col - 1
+
+			self.message("Invalid col:" + str(col))
+
 
 	def read_action(self):
 		actions = [ACTION_OPEN, ACTION_MARK, ACTION_UNMARK, ACTION_CANCEL, ACTION_DUMP, ACTION_EXIT]
@@ -96,10 +99,11 @@ class GameText(MineSweeper):
 			action = input("Enter action (O:Open, M:Mark, U:Unmark, C:Cancel):")
 			if len(action) <= 0:
 				continue
+
 			if action[0] in actions :
 				return action[0]
-			else:
-				self.message("Invalid action:"+action)
+			self.message("Invalid action:"+action)
+
 	def play(self):
 		while True:
 			self.print_board(False)
@@ -147,3 +151,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+
