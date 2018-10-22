@@ -165,10 +165,10 @@ class MineSweeper:
 			return
 
 		for i in (-1, 0, 1):
+			if (row + i) >= self.row_count or (row + i) < 0:
+			    continue
 			for j in (-1, 0 , 1):
-				if (row + i)  >= self.row_count or (row + i) < 0:
-				    continue
-				if (col + j)  >= self.col_count or (col + j) < 0:
+				if (col + j) >= self.col_count or (col + j) < 0:
 				    continue
 
 				cell = self.get_cell(row + i, col + j)
