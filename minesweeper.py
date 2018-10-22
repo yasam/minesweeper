@@ -154,14 +154,13 @@ class MineSweeper:
 
 	def explore_cell(self, row, col):
 		cell = self.get_cell(row, col)
-		cnt = self.get_mine_count(row, col)
 		cell.open()
 		self.open_count += 1
+		cnt = self.get_mine_count(row, col)
+		cell.set_mine_count(cnt)
 		self.update_cell(row, col)
 
 		if cnt != 0:
-			cell.set_mine_count(cnt)
-			self.update_cell(row, col)
 			return
 
 		for i in (-1, 0, 1):
