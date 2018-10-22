@@ -34,17 +34,17 @@ class GameGui(MineSweeper):
 	def update_cell(self, row, col, is_real=False):
 		fgcolors = ["","green", "yellow", "blue", "purple", "navy", "orange", "maroon", "red"]
 		cell = self.get_cell(row, col)
+
+		bgcolor = "DarkGrey"
+		relief = "raised"
+		val = cell.get_str_val()
 		if cell.is_open() :
 			bgcolor = "LightGrey"
 			relief = "sunken"
-		else:
-			bgcolor = "DarkGrey"
-			relief = "raised"
 
 		if is_real:
 			val = cell.get_str_real_val()
-		else:
-			val = cell.get_str_val()
+
 
 
 		l = self.get_cell_name(row+1, col+1)
