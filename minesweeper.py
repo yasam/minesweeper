@@ -126,6 +126,12 @@ class MineSweeper:
 
 
 	def get_cell(self, row, col):
+		if row < 0 or row >= self.row_count :
+			return None
+
+		if col < 0 or col >= self.col_count :
+			return None
+
 		return self.board[row][col]
 
 	def check_win(self):
@@ -136,17 +142,11 @@ class MineSweeper:
 	def get_mine_count(self, row, col):
 		cnt = 0;
 		for i in (-1, 0, 1):
-			if (row + i) < 0 :
-				continue
-			if (row + i) >= self.row_count :
-				continue
-
 			for j in (-1, 0, 1):
-				if (col + j) < 0:
-					continue
-				if (col + j) >= self.col_count:
-					continue
 				cell = self.get_cell(row + i, col + j)
+				if cell == None:
+					continue
+
 				if cell.is_mine():
 					cnt += 1
 
@@ -164,13 +164,11 @@ class MineSweeper:
 			return
 
 		for i in (-1, 0, 1):
-			if (row + i) >= self.row_count or (row + i) < 0:
-			    continue
 			for j in (-1, 0 , 1):
-				if (col + j) >= self.col_count or (col + j) < 0:
-				    continue
-
 				cell = self.get_cell(row + i, col + j)
+
+				if cell == None:
+					continue
 
 				if cell.is_open() == False and cell.is_marked() == False:
 					self.explore_cell(row + i, col + j)

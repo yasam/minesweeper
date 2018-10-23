@@ -96,6 +96,8 @@ class GameGui(MineSweeper):
 				l = self.get_cell_name(i, j)
 				lbl = self.app.addLabel(l, " ", i, j)
 				self.app.setLabelBg(l, "DarkGrey")
+				self.app.setLabelWidth(l, 40)
+				self.app.setLabelHeight(l, 40)
 
 				if i > 0 and j > 0:
 					lbl.config(borderwidth=2, relief="raised")
@@ -109,8 +111,6 @@ class GameGui(MineSweeper):
 			lbl = self.get_cell_name(0, i+1)
 			self.app.setLabel(lbl, str(self.cols[i]))
 			self.app.setLabelBg(lbl, "LightBlue")
-			self.app.setLabelWidth(lbl, 40)
-			self.app.setLabelHeight(lbl, 40)
 			self.app.getLabelWidget(lbl).config(relief="ridge")
 
 		#draw rows
@@ -118,8 +118,6 @@ class GameGui(MineSweeper):
 			lbl = self.get_cell_name(i+1, 0)
 			self.app.setLabel(lbl, self.rows[i])
 			self.app.setLabelBg(lbl, "LightBlue")
-			self.app.setLabelWidth(lbl, 40)
-			self.app.setLabelHeight(lbl, 40)
 			self.app.getLabelWidget(lbl).config(relief="ridge")
 
 		# set verbose events
