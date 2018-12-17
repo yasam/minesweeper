@@ -1,8 +1,5 @@
 #!/usr/bin/python3
 
-import sys
-import random
-import json
 import argparse
 from appJar import gui
 from tkinter import messagebox
